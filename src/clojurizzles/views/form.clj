@@ -4,9 +4,9 @@
         [hiccup.form]))
 
 
-(defpartial user-fields [{:keys [aname answer]}]
+(defpartial user-fields [{:keys [name answer]}]
   (label "name" "Name: ")
-  (text-field "name" aname)
+  (text-field "name" name)
   (label "answer" "Answer: ")
   (check-box "answer" answer))
 

@@ -18,22 +18,19 @@
           (form/user-fields user)
           (submit-button "Go!"))))
 
-(defn valid? [{:keys [aname answer]}]
+(defn valid? [{:keys [answer]}]
   true)
 
-(defn saidyes? [answer]
-  (if (= answer "true") true false))
-
-(defn saidyes?? [user]
+(defn saidyes? [user]
   (if (= (user :answer) "true") true false))
+
+(defn gavename? [user]
+  (pos? (count (user :name))))
 
 (defpage [:post "/rizzles"] {:as user}
   (common/layout
-    (if (valid? user)
-      ([:h1 "Valid user"]
-        (if (saidyes? (user :answer))
-          ([:h2 "You said yes!"])
-          ([:h2 "You said no..."]))
-      [:p print user])
-      ([:h1 "Invalid user"]))))
-
+    (if (and (valid? user) (saidyes? user) (gavename? user))
+      '([:h1 "Thanks for name, and saying yes"]
+        [:h2 "Cats will like you forever"])
+      '([:h1 "Oh noes"]
+        [:h2 "Either you didn't put in your name, or didn't click yes"]))))
