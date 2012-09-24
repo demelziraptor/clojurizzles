@@ -24,13 +24,16 @@
 (defn saidyes? [answer]
   (if (= answer "true") true false))
 
+(defn saidyes?? [user]
+  (if (= (user :answer) "true") true false))
+
 (defpage [:post "/rizzles"] {:as user}
   (common/layout
     (if (valid? user)
       ([:h1 "Valid user"]
-      (if saidyes? ((user) :answer)
-        ([:h2 "You said yes!"])
-        ([:h2 "You said no..."]))
+        (if (saidyes? (user :answer))
+          ([:h2 "You said yes!"])
+          ([:h2 "You said no..."]))
       [:p print user])
       ([:h1 "Invalid user"]))))
 
